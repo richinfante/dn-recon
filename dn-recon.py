@@ -130,7 +130,9 @@ if args.discover:
       out_certs.add(dns_name)
   print(f'loaded {len(out_certs)} from certificate transparency')
 
-  targets.union(out_certs)
+  if args.verbose:
+    print(f'ct: found domains: {out_certs}')
+  targets.update(out_certs)
 else:
   print('skipping certificate transparency domain enumeration.')
 
@@ -147,6 +149,8 @@ if args.dict_file:
 
 # print info
 print(f'got {len(targets)} domains to explore')
+if args.verbose:
+  print('targets: ', targets)
 
 targets_to_search = sorted(targets)
 
